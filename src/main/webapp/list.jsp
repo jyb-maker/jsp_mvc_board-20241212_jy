@@ -10,14 +10,32 @@
 <body>
 	<h2>게시판 전체 글 보기</h2>
 	<hr>
-	<!--  파이썬 for문 
+	<!-- 
 	for bDto in boardList:
-		print("bDto.bnum")
-		print("bDto.btitle")	
-	-->		
-	<c:forEach items="${boardList}" var="bDto"> 
-		${bDto.bnum} / ${bDto.btitle} / ${bDto.bdate} <br>	
-	</c:forEach>
+		print(bDto.bnum)
+		print(bDto.btitle)
+	 --> 
+	<table width="600" border="1" cellpadding="0" cellspacing="0">
+		<tr>
+			<th>번호</th>
+			<th>제목</th>
+			<th>작성자</th>
+			<th>등록일</th>
+			<th>조회수</th>
+		</tr>	
+		<c:forEach items="${boardList}" var="bDto">
+		<tr>
+			<td>${bDto.bnum}</td>
+			<td>${bDto.btitle }</td>
+			<td>${bDto.bname }</td>
+			<td>${bDto.bdate }</td>
+			<td>${bDto.bhit }</td>
+		</tr>
+		</c:forEach>
+	
+	
+	</table> 
+	
 	
 </body>
 </html>
