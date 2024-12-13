@@ -25,7 +25,7 @@ public class BoardController extends HttpServlet{
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		actionDo(request, response);
-				
+		
 	}
 
 	@Override
@@ -46,9 +46,9 @@ public class BoardController extends HttpServlet{
 		String conPath = request.getContextPath();///jsp_mvc_board-20241212
 		String com = uri.substring(conPath.length());//uri - conPath(길이)->/list.jsp
 		
-//		System.out.println(uri);
-//		System.out.println(conPath);
-//		System.out.println(com);
+		//System.out.println(uri);
+		//System.out.println(conPath);
+		//System.out.println(com);
 		
 		if(com.equals("/list.do")) {
 			
@@ -69,14 +69,36 @@ public class BoardController extends HttpServlet{
 			
 			viewPage="list.do";//주의!! list.jsp X list.do O
 		} else if(com.equals("/content_view.do")) {
-			String bnum = request.getParameter("bnum"); // 유저가 글내용 보기를 원하는 클릭한 글의 번호 
+			String bnum = request.getParameter("bnum");//유저가 글내용 보기를 원하는 클릭한 글의 번호
 			BoardDao boardDao = new BoardDao();
-			BoardDto bDto  = boardDao.content_view(bnum);
+			BoardDto bDto = boardDao.content_view(bnum);
 			request.setAttribute("boardDto", bDto);
 			viewPage="content_view.jsp";
-		}
+		} else if(com.equals("/delete.do")) {
+			String bnum = request.getParameter("bnum");//유저가 삭제를 원하는 글의 번호
+			BoardDao boardDao = new BoardDao();
+			boardDao.board_delete(bnum);
+			viewPage="list.do";//주의!! list.jsp X list.do O
+		} else if(com.equals("/modify_form.do")) {
+			String bnum = request.getParameter("bnum");//유저가 삭제를 원하는 글의 번호
+			BoardDao boardDao = new BoardDao();
+			BoardDto bDto = boardDao.content_view(bnum);
+			request.setAttribute("boardDto", bDto);
+			viewPage="modify_form.jsp";
+		} else if(com.equals("/modify.do")) {
+			String bnum = request.getParameter("bnum");//유저가 수정을 원하는 글의 번호
+			String bname = request.getParameter("bname");
+			String btitle = request.getParameter("btitle");
+			String bcontent = request.getParameter("bcontent");
+			BoardDao boardDao = new BoardDao();
+			boardDao.board_modify(bnum, bname, btitle, bcontent);
+			
+			viewPage="list.do";
+		} 
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
-		dispatcher.forward(request, response);	
+		dispatcher.forward(request, response);
 	}
+	
+	
 }

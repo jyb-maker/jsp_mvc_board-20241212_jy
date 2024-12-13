@@ -176,4 +176,85 @@ public class BoardDao {
 		return bDto;//클릭한 글 번호를 인수로 넣어서 호출하면 그 글의 내용이 담긴 DTO가 반환됨
 	}
 	
+	//board_delete->글삭제 메소드
+	public void board_delete(String cbnum) { //글 번호로 삭제하기
+		
+		String sql = "DELETE FROM mvc_board WHERE bnum=?";//글 번호로 삭제하기
+		
+		String driverName = "com.mysql.jdbc.Driver";
+		String url = "jdbc:mysql://localhost:3306/jsp_project";
+		String username = "root";
+		String password = "12345";
+		
+		Connection conn= null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			Class.forName(driverName);
+			conn = DriverManager.getConnection(url, username, password);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, cbnum);
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			try {				
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+				
+				
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
+	
+	public void board_modify(String bnum, String bname, String btitle, String bcontent) {
+		
+		String sql = "UPDATE mvc_board SET bname=?, btitle=?, bcontent=? WHERE bnum=?";//글 번호로 수정하기
+		
+		String driverName = "com.mysql.jdbc.Driver";
+		String url = "jdbc:mysql://localhost:3306/jsp_project";
+		String username = "root";
+		String password = "12345";
+		
+		Connection conn= null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			Class.forName(driverName);
+			conn = DriverManager.getConnection(url, username, password);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, bname);
+			pstmt.setString(2, btitle);
+			pstmt.setString(3, bcontent);
+			pstmt.setString(4, bnum);
+			
+			pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			try {				
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+				
+				
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 }
