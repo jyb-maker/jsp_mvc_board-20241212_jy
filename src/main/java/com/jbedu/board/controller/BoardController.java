@@ -44,6 +44,8 @@ public class BoardController extends HttpServlet{
 			request.setAttribute("boardList", bDtos);
 			
 			viewPage="list.jsp";
+		} else if(com.equals("/write_form.do")) {
+			viewPage="write_form.jsp";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
