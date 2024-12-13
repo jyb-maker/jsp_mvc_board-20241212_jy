@@ -1,6 +1,10 @@
 package com.jbedu.board.controller;
 
 import java.io.IOException;
+import java.util.List;
+
+import com.jbedu.board.dao.BoardDao;
+import com.jbedu.board.dto.BoardDto;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -23,15 +27,24 @@ public class BoardController extends HttpServlet{
 		System.out.println("doGet 호출");
 		request.setCharacterEncoding("utf-8");		
 
-		String viewPage = "list.jsp"; //글 목록 페이지 파일 이름
+		String viewPage = ""; //글 목록 페이지 파일 이름
 				
-		String uri = request.getRequestURI();  //http://localhost:8888/jsp_mvc_board-20241212_jy/list.jsp
-		String conPath = request.getContextPath();  //http://localhost:8888
-		String com = uri.substring(conPath.length()); // uri-conPath(길이) -> jsp_mvc_board-20241212_jy/list.jsp
+		String uri = request.getRequestURI();  // /jsp_mvc_board-20241212_jy/list.jsp
+		String conPath = request.getContextPath();  // /jsp_mvc_board-20241212_jy
+		String com = uri.substring(conPath.length()); // uri-conPath(길이) -> /list.jsp
 		
 		System.out.println(uri);
 		System.out.println(conPath);
 		System.out.println(com);
+		
+		if(com.equals("/list.do")) {
+			
+			BoardDao boardDao = new BoardDao();
+			List<BoardDto> bDtos = boardDao.board_list();
+			request.setAttribute("boardList", bDtos);
+			
+			viewPage="list.jsp";
+		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);

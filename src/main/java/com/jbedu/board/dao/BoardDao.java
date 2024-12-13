@@ -12,7 +12,7 @@ import com.jbedu.board.dto.BoardDto;
 
 public class BoardDao {
 
-	public List<BoardDto> board_list() { //모든 게시판 글 목록 가져오기 
+	public List<BoardDto> board_list() { //모든 게시판 글 목록 가져와서 list 반환 
 		
 		String sql = "SELECT * FROM mvc_board ORDER BY bnum DESC"; //게시판 모든 글 가져오기 
 		
