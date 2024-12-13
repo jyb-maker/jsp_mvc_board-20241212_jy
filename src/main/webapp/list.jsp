@@ -34,9 +34,9 @@
 		</c:forEach>
 		<tr>
 			<td colspan="5" align="right">
-				<input type="button" value="글쓰기" onclick="write_form.do">
-			</td>	
-		</tr>	
+				<input type="button" value="글쓰기" onclick="location.href='write_form.do'">
+			</td>
+		</tr>
 	</table> 
 	
 	

@@ -68,5 +68,50 @@ public class BoardDao {
 		}
 		return bDtos; //board_list 메소드를 호출 시 최종적으로 반환되는 글들이 모여있는 리스트 값
 	}
+
+	public void board_write(String btitle, String bname, String bcontent) { //게시판에 글쓰기 메소드  
+		
+		String sql = "INSERT INTO mvc_board(btitle,bname,bcontent, bhit) VALUES(?,?,?,0)"; //게시판 글쓰기 
+		
+		String driverName = "com.mysql.jdbc.Driver";
+		String url = "jdbc:mysql://localhost:3306/jsp_project";
+		String username = "root";
+		String password = "12345";
+		
+		Connection conn= null;
+		PreparedStatement pstmt = null;
+
+		
+		try {
+			Class.forName(driverName);
+			conn = DriverManager.getConnection(url, username, password);
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, btitle);
+			pstmt.setString(2, bname);
+			pstmt.setString(3, bcontent);			
+			
+			pstmt.executeUpdate();		
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+				if (conn != null) {
+					conn.close();
+				}
+				
+				
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	
 }
+
+

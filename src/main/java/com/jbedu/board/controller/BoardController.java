@@ -13,7 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("*.do")  // Controller 기능의 클래스로 서버가 인식하도록 함 
+@WebServlet("*.do") //컨트롤러 기능의 클래스로 서버가 인식하도록 함
 public class BoardController extends HttpServlet{
 
 	public BoardController() {
@@ -23,15 +23,16 @@ public class BoardController extends HttpServlet{
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 중요한 건 매개변수!!
-		System.out.println("doGet 호출");
-		request.setCharacterEncoding("utf-8");		
-
-		String viewPage = ""; //글 목록 페이지 파일 이름
-				
-		String uri = request.getRequestURI();  // /jsp_mvc_board-20241212_jy/list.jsp
-		String conPath = request.getContextPath();  // /jsp_mvc_board-20241212_jy
-		String com = uri.substring(conPath.length()); // uri-conPath(길이) -> /list.jsp
+		// TODO Auto-generated method stub
+		System.out.println("doGet 호출!");
+		
+		request.setCharacterEncoding("utf-8");
+		
+		String viewPage = null; //글 목록 페이지 파일 이름
+		
+		String uri = request.getRequestURI();///jsp_mvc_board-20241212/list.jsp
+		String conPath = request.getContextPath();///jsp_mvc_board-20241212
+		String com = uri.substring(conPath.length());//uri - conPath(길이)->/list.jsp
 		
 		System.out.println(uri);
 		System.out.println(conPath);
@@ -46,19 +47,51 @@ public class BoardController extends HttpServlet{
 			viewPage="list.jsp";
 		} else if(com.equals("/write_form.do")) {
 			viewPage="write_form.jsp";
+		} else if(com.equals("/write.do")) {
+			BoardDao boardDao = new BoardDao();
+			String btitle = request.getParameter("btitle");
+			String bname = request.getParameter("bname");
+			String bcontent = request.getParameter("bcontent");
+			
+			boardDao.board_write(btitle, bname, bcontent);
+			
+			viewPage="list.do";//주의!! list.jsp X list.do O
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
-				
+		
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 중요한 건 매개변수!!
-		 
+		// TODO Auto-generated method stub
+		request.setCharacterEncoding("utf-8");
+		
+		String viewPage = ""; //글 목록 페이지 파일 이름
+		
+		String uri = request.getRequestURI();///jsp_mvc_board-20241212/list.jsp
+		String conPath = request.getContextPath();///jsp_mvc_board-20241212
+		String com = uri.substring(conPath.length());//uri - conPath(길이)->/list.jsp
+		
+		if(com.equals("/write.do")) {
+			
+			BoardDao boardDao = new BoardDao();
+			String btitle = request.getParameter("btitle");
+			String bname = request.getParameter("bname");
+			String bcontent = request.getParameter("bcontent");
+			
+			boardDao.board_write(btitle, bname, bcontent);
+			
+			viewPage="list.do";//주의!! list.jsp X list.do O
+		} 
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
+		dispatcher.forward(request, response);
+		
 	}
-
-
+	
+	
+	
 	
 }
