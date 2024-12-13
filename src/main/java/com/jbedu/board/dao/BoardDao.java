@@ -114,8 +114,10 @@ public class BoardDao {
 		
 	}
 	
-	public BoardDto content_view(String cbnum) { //게시판 글 목록에서 클릭한 글 내용 가져오기
-		up_hit(cbnum); //조회수 증가 메소드 호출 
+	public BoardDto content_view(String cbnum, String modifyFlag) { //게시판 글 목록에서 클릭한 글 내용 가져오기
+		if(modifyFlag.equals("0")) {
+			up_hit(cbnum);//조회수 증가 메소드 호출
+		}			
 		
 		String sql = "SELECT * FROM mvc_board WHERE bnum=?";//클릭한 글 번호로 검색하여 글 가져오기
 		
@@ -258,7 +260,9 @@ public class BoardDao {
 			}
 		}
 	}
+	
 	public void up_hit(String bnum) { //조회수 증가
+		
 		String sql = "UPDATE mvc_board SET bhit=bhit+1 WHERE bnum=?";//글 번호로 삭제하기
 		
 		String driverName = "com.mysql.jdbc.Driver";
@@ -294,7 +298,7 @@ public class BoardDao {
 			}
 		}
 		
+		
 	}
-			
-}
 	
+}

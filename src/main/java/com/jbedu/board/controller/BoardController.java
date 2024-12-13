@@ -71,8 +71,8 @@ public class BoardController extends HttpServlet{
 		} else if(com.equals("/content_view.do")) {
 			String bnum = request.getParameter("bnum");//유저가 글내용 보기를 원하는 클릭한 글의 번호
 			BoardDao boardDao = new BoardDao();
-			BoardDto bDto = boardDao.content_view(bnum);
-//			boardDao.up_hit(bnum); // 해당번호 글의 조회수 1씩 증가 
+			BoardDto bDto = boardDao.content_view(bnum, "0");
+//			boardDao.up_hit(bnum);//해당 번호 글의 조회수 1씩 증가
 			request.setAttribute("boardDto", bDto);
 			viewPage="content_view.jsp";
 		} else if(com.equals("/delete.do")) {
@@ -82,8 +82,9 @@ public class BoardController extends HttpServlet{
 			viewPage="list.do";//주의!! list.jsp X list.do O
 		} else if(com.equals("/modify_form.do")) {
 			String bnum = request.getParameter("bnum");//유저가 삭제를 원하는 글의 번호
+			String modifyFlag = request.getParameter("modify");
 			BoardDao boardDao = new BoardDao();
-			BoardDto bDto = boardDao.content_view(bnum);
+			BoardDto bDto = boardDao.content_view(bnum, "1");
 			request.setAttribute("boardDto", bDto);
 			viewPage="modify_form.jsp";
 		} else if(com.equals("/modify.do")) {
