@@ -68,6 +68,9 @@ public class BoardController extends HttpServlet{
 			boardDao.board_write(btitle, bname, bcontent);
 			
 			viewPage="list.do";//주의!! list.jsp X list.do O
+		} else if(com.equals("/content_view.do")) {
+			String bnum = request.getParameter("bnum"); // 유저가 글내용 보기를 원하는 클릭한 글의 번호 
+			viewPage="content_view.jsp";
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
