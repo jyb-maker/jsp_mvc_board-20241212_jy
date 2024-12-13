@@ -24,7 +24,19 @@ public class BoardController extends HttpServlet{
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("doGet 호출!");
+		actionDo(request, response);
+				
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		actionDo(request, response);
+		
+	}
+	
+	private void actionDo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("actionDo 호출!");
 		
 		request.setCharacterEncoding("utf-8");
 		
@@ -34,9 +46,9 @@ public class BoardController extends HttpServlet{
 		String conPath = request.getContextPath();///jsp_mvc_board-20241212
 		String com = uri.substring(conPath.length());//uri - conPath(길이)->/list.jsp
 		
-		System.out.println(uri);
-		System.out.println(conPath);
-		System.out.println(com);
+//		System.out.println(uri);
+//		System.out.println(conPath);
+//		System.out.println(com);
 		
 		if(com.equals("/list.do")) {
 			
@@ -59,39 +71,6 @@ public class BoardController extends HttpServlet{
 		}
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
-		dispatcher.forward(request, response);
-		
+		dispatcher.forward(request, response);	
 	}
-
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		request.setCharacterEncoding("utf-8");
-		
-		String viewPage = ""; //글 목록 페이지 파일 이름
-		
-		String uri = request.getRequestURI();///jsp_mvc_board-20241212/list.jsp
-		String conPath = request.getContextPath();///jsp_mvc_board-20241212
-		String com = uri.substring(conPath.length());//uri - conPath(길이)->/list.jsp
-		
-		if(com.equals("/write.do")) {
-			
-			BoardDao boardDao = new BoardDao();
-			String btitle = request.getParameter("btitle");
-			String bname = request.getParameter("bname");
-			String bcontent = request.getParameter("bcontent");
-			
-			boardDao.board_write(btitle, bname, bcontent);
-			
-			viewPage="list.do";//주의!! list.jsp X list.do O
-		} 
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
-		dispatcher.forward(request, response);
-		
-	}
-	
-	
-	
-	
 }
