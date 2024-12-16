@@ -114,10 +114,7 @@ public class BoardDao {
 		
 	}
 	
-	public BoardDto content_view(String cbnum, String modifyFlag) { //게시판 글 목록에서 클릭한 글 내용 가져오기
-		if(modifyFlag.equals("0")) {
-			up_hit(cbnum);//조회수 증가 메소드 호출
-		}			
+	public BoardDto content_view(String cbnum) { //게시판 글 목록에서 클릭한 글 내용 가져오기
 		
 		String sql = "SELECT * FROM mvc_board WHERE bnum=?";//클릭한 글 번호로 검색하여 글 가져오기
 		
